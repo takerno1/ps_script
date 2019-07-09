@@ -1,5 +1,4 @@
 $input = Get-Content C:\work\1.txt
-$VarName -as[int]
 $array = @()
 $input | foreach-object {
     $writeobj = $false
@@ -17,11 +16,12 @@ $input | foreach-object {
         $obj | Add-Member -type NoteProperty -name Total_bytes -value $Size 
         $array += $obj
     }
-    $array | Group-Object CustomerId | %{
+    $array1=$array | Group-Object CustomerId | %{
     New-Object psobject -Property @{
-        Item = $_.Name
-        Sum = ($_.Group | Measure-Object Total_bytes -Sum).Sum
+        CustomerId = $_.Name
+        Total_bytes = ($_.Group | Measure-Object Total_bytes -Sum).Sum
+        
     }
 }}
 
-$array
+$array1
